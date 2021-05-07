@@ -13,8 +13,6 @@ const createApp = () => {
   });
 
   BooksRouter(app);
-  // otras
-  // otras
   return app;
 }
 
