@@ -68,7 +68,7 @@ describe('Tests for api/books', () => {
         }
       ]);
       return request(app)
-      .get('/api/books')
+      .get('/api/books/')
       .expect(200)
       .then(({body}) => {
         expect(body.length).toBe(dataExpect.ops.length);
