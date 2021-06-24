@@ -61,15 +61,6 @@ describe('Tests for api/books', () => {
       .expect(200)
     });
 
-    // it('should return two books in array', () => {
-    //   return request(app)
-    //   .get('/api/books')
-    //   .expect(200)
-    //   .then(({body}) => {
-    //     expect(body.length).toBe(2);
-    //   });
-    // });
-
     it('should return a books array', async () => {
       const dataExpect = await database.collection(collection).insertMany([
         {
