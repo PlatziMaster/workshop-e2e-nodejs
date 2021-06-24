@@ -21,6 +21,11 @@ class MongoLib  {
     return MongoLib.connection;
   }
 
+  async findOne(collection, query) {
+    const db = await this.connect();
+    return db.collection(collection).findOne(query);
+  }
+
   async getAll(collection, query) {
     const db = await this.connect();
     return db.collection(collection).find(query).toArray();

@@ -4,7 +4,6 @@ const createApp = require("../src/app");
 
 const { MongoClient, ObjectId } = require("mongodb");
 
-
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
 const DB_NAME = config.dbName;
