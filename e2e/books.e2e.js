@@ -1,4 +1,6 @@
 const request = require("supertest");
+const bcrypt = require('bcrypt');
+
 const { config } = require("../src/config");
 const createApp = require("../src/app");
 
@@ -33,9 +35,29 @@ describe('Tests for api/books', () => {
 
   describe('GET api/books', () => {
 
+    let token = null;
+
+    beforeAll(async () => {
+      const data = {
+        username: 'nico',
+        password: '123456',
+      }
+      await database.collection('users').insert({
+        username: data.username,
+        password: await bcrypt.hash(data.password, 10),
+      });
+      const loginReq = await request(app)
+        .post('/api/auth/login/')
+        .send(data)
+        .expect(200);
+
+      token = loginReq.body.token;
+    });
+
     it('should return 200 in status code', () => {
       return request(app)
       .get('/api/books')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
     });
 
@@ -68,6 +90,7 @@ describe('Tests for api/books', () => {
       ]);
       return request(app)
       .get('/api/books/')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then(({body}) => {
         expect(body.length).toBe(dataExpect.ops.length);
